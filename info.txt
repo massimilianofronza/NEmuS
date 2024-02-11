@@ -1,0 +1,11 @@
+BASICS:
+http://www.emulator101.com/
+https://www.reddit.com/r/C_Programming/comments/9dzkhw/how_would_one_write_an_emulator_in_c/
+https://fms.komkon.org/EMUL8/HOWTO.html#LABF
+
+GUI:
+https://www.gtk.org/docs/language-bindings/cpp
+https://stackoverflow.com/questions/1186017/how-do-i-build-a-graphical-user-interface-in-c
+https://www.qt.io/
+https://www.codeguru.com/cpp/cpp/creating-a-cc-gui-with-gtk.html
+
