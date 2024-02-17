@@ -1,24 +1,17 @@
-/*    
-    *codebuffer is a valid pointer to 8080 assembly code    
-    pc is the current offset into the code    
-
-    returns the number of bytes of the op    
-*/    
-
 #include <fstream>
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-int disassemble(unsigned char *codebuffer, int pc) {
-    unsigned char *code = &codebuffer[pc];
+int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
+    unsigned char code = buffer[pc];
     int opbytes = 1;
     cout << "%04x " << pc << endl;
 
-    switch (*code) {
-        case 0x00: printf("NOP"); break;    
-        case 0x01: printf("LXI    B,#$%02x%02x", code[2], code[1]); opbytes=3; break;    
+    switch (code) {
+        case 0x00: cout << "NOP"; break;    
+        //case 0x01: printf("LXI    B,#$%02x%02x", code[2], code[1]); opbytes=3; break;    
     }
 
     cout << endl;
@@ -58,12 +51,18 @@ int main (int argc, char **argv) {
     }
     file.close();
 
+    unsigned char *this_buffer = buffer.data();
     unsigned int pc = 0;
 
+    while (pc < fsize) {
+        pc += disassemble6502op(this_buffer, pc);
+    }
+
+    /*
     for (const auto &elem : buffer) {
         cout << elem << " ";
     }
-    cout << endl;
+    cout << endl;*/
 
     return 0;
 }
