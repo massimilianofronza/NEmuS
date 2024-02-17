@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -37,16 +38,32 @@ int main (int argc, char **argv) {
         cerr << "Error opening the file.\n";
         return 1;
     }
-    
-    // Get the file size and read it into a memory buffer
-    file.seekg(0, ios::end);
-    streampos fsize = file.tellg();
-    file.seekg(0, ios::beg);
 
-    unsigned char *buffer = new unsigned char[fsize];
-    // vector<unsigned char> buffer(fsize); // TODO To automatically manage the memory and provide additional safety
+    file.seekg(0, ios::end);            // move the get pointer at the end of the file
+    streampos fsize = file.tellg();     // get its position(size fo the file)
+    file.seekg(0, ios::beg);            // move it back at the beginning
 
     cout << "fsize of given input: " << fsize << endl;
+
+    // create a buffer to read the file
+    vector<unsigned char> buffer(fsize);
+    // unsigned char *buffer = new unsigned char[fsize];  // doesn't automatically manage the memory. Vector is also safer
+
+    // read binary data into the buffer - reinterpret_cast<char*> is basically the "better" C++ version of (char*)
+    if (file.read(reinterpret_cast<char*>(buffer.data()), fsize)) {
+        cout << "Buffer filled successfully!\n";
+    }
+    else {
+        cerr << "Error while filling the buffer!\n";
+    }
+    file.close();
+
+    unsigned int pc = 0;
+
+    for (const auto &elem : buffer) {
+        cout << elem << " ";
+    }
+    cout << endl;
 
     return 0;
 }
