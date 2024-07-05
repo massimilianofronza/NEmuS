@@ -5,16 +5,23 @@
 using namespace std;
 
 int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
-    unsigned char code = buffer[pc];
+    const unsigned char *code = &buffer[pc];
     int opbytes = 1;
-    cout << "%04x " << pc << endl;
 
-    switch (code) {
-        case 0x00: cout << "NOP"; break;    
+    // 2 hex digits make 1 byte (8 bits)
+    // The first couple of bytes is 454e
+    // Little-endian machines like the NES store data with the most significant byte as second
+    // This means that 4e is going to be in position 0, and 45 in position 1 of the pc
+    switch (*code) {
+        case 0x00:
+            cout << pc << ": NOP\n"; break;
+        case 0x01:
+            cout << pc << ": boh\n"; break;
+        default:
+            cout << pc << ": /: " << *code << "\n"; break;
         //case 0x01: printf("LXI    B,#$%02x%02x", code[2], code[1]); opbytes=3; break;    
     }
 
-    cout << endl;
     return opbytes;
 }
 
@@ -32,17 +39,17 @@ int main (int argc, char **argv) {
         return 1;
     }
 
+    // get size of input file
     file.seekg(0, ios::end);            // move the get pointer at the end of the file
     streampos fsize = file.tellg();     // get its position(size fo the file)
     file.seekg(0, ios::beg);            // move it back at the beginning
-
-    cout << "fsize of given input: " << fsize << endl;
-
+    cout << "fsize of given input: " << fsize << " hexadecimal numbers, half-bytes, " << fsize << " " << endl;
+    
     // create a buffer to read the file
     vector<unsigned char> buffer(fsize);
     // unsigned char *buffer = new unsigned char[fsize];  // doesn't automatically manage the memory. Vector is also safer
-
-    // read binary data into the buffer - reinterpret_cast<char*> is basically the "better" C++ version of (char*)
+    
+    // read binary data into the buffer - reinterpret_cast<char*> is for low-level memory operations that intepret memory contents as a dfferent type
     if (file.read(reinterpret_cast<char*>(buffer.data()), fsize)) {
         cout << "Buffer filled successfully!\n";
     }
@@ -50,14 +57,13 @@ int main (int argc, char **argv) {
         cerr << "Error while filling the buffer!\n";
     }
     file.close();
-
+    
     unsigned char *this_buffer = buffer.data();
     unsigned int pc = 0;
-
+return 0;
     while (pc < fsize) {
         pc += disassemble6502op(this_buffer, pc);
     }
-
     /*
     for (const auto &elem : buffer) {
         cout << elem << " ";
