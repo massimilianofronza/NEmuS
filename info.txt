@@ -9,3 +9,18 @@ https://stackoverflow.com/questions/1186017/how-do-i-build-a-graphical-user-inte
 https://www.qt.io/
 https://www.codeguru.com/cpp/cpp/creating-a-cc-gui-with-gtk.html
 
+8080 Disassembler:
+    Diving In: every processor has a reference manual made by the manufacturer called smth like "Programmer's Environment Manual", or "the data book".
+        > hexdump -v invaders.h
+    Disassembler pt 1: a disassembler translates a stream of hex numbers back into assembly Language source. It can automate a lot of the manual translations that you could do.
+        --to be continued, code here--
+    Memory maps: can Google how much address space is used by that CPU, or you could watch the code run in the emulator and figure out what it's doing, e.g. where the game thinks RAM should be, where video memory is, etc.
+    Developing on the command line: debugging command line programs with GDB.
+    Disassembler pt 2: run the disassembler and look at the output. Little-endian(store data from smallest byte to biggest), big-endian.
+
+Notes:
+The NES is a 8-bit machine, meaning that each opcode takes 8 bits(2 hex).
+The Program Counter is a 16-bit register, need to understand if it has to be the same for me.
+Instructions are 151, and are either 1, 2, or 3 bytes long, depending on the addressing mode. The first byte is the opcode and the remaining bytes are the operands.
+There are also unofficial opcodes, sometimes called "illegal opcodes" or "undocumented opcodes", and are CPU instructions that were officially left unused in the original design.
+Some games may use illegal opcodes, so you better implement them.
