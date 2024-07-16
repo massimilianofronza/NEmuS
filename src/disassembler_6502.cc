@@ -168,6 +168,9 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
         case 0x30:
             cout << pc << ": BMI " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
+        case 0x31:
+            cout << pc << ": AND (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
         case 0x32:
             cout << pc << ": JAM" << endl; break;
         case 0x33:
@@ -181,6 +184,9 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             opbytes = 2; break;
         case 0x36:
             cout << pc << ": ROL " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
+            opbytes = 2; break;
+        case 0x37:
+            cout << pc << ": RLA " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
             opbytes = 2; break;
         case 0x38:
             cout << pc << ": SEC" << endl; break;
@@ -217,6 +223,9 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             opbytes = 2; break;
         case 0x42:
             cout << pc << ": JAM" << endl; break;
+        case 0x43:
+            cout << pc << ": SRE (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X)" << endl;
+            opbytes = 2; break;
         case 0x44:
             cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
@@ -226,12 +235,25 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
         case 0x46:
             cout << pc << ": LSR " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
+        case 0x47:
+            cout << pc << ": SRE " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
         case 0x48:
             cout << pc << ": PHA" << endl; break;
+        case 0x49:
+            cout << pc << ": EOR #" << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
         case 0x4a:
             cout << pc << ": LSR A" << endl; break;
+        case 0x4b:
+            cout << pc << ": ALR #" << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
         case 0x4c:
             cout << pc << ": JMP " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << endl;
+            opbytes = 3; break;
+        case 0x4d:
+            cout << pc << ": EOR " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << endl;
             opbytes = 3; break;
         case 0x4e:
@@ -245,6 +267,9 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
         case 0x50:
             cout << pc << ": BVC " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
+        case 0x51:
+            cout << pc << ": EOR (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
         case 0x52:
             cout << pc << ": JAM" << endl; break;
         case 0x53:
@@ -252,6 +277,9 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             opbytes = 2; break;
         case 0x54:
             cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
+        case 0x55:
+            cout << pc << ": EOR " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
             opbytes = 2; break;
         case 0x56:
             cout << pc << ": LSR " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
@@ -261,6 +289,10 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             opbytes = 2; break;
         case 0x58:
             cout << pc << ": CLI" << endl; break;
+        case 0x59:
+            cout << pc << ": EOR " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
+            opbytes = 3; break;
         case 0x5a:
             cout << pc << ": NOP (undocumented)" << endl; break;
         case 0x5b:
@@ -334,8 +366,14 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
         case 0x70:
             cout << pc << ": BVS " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
+        case 0x71:
+            cout << pc << ": ADC (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
         case 0x72:
             cout << pc << ": JAM" << endl; break;
+        case 0x73:
+            cout << pc << ": RRA (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
         case 0x74:
             cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
@@ -344,6 +382,9 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             opbytes = 2; break;
         case 0x76:
             cout << pc << ": ROR " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
+            opbytes = 2; break;
+        case 0x77:
+            cout << pc << ": RRA " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
             opbytes = 2; break;
         case 0x78:
             cout << pc << ": SEI" << endl; break;
@@ -363,6 +404,10 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             opbytes = 3; break;
         case 0x7d:
             cout << pc << ": ADC " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",X" << endl;
+            opbytes = 3; break;
+        case 0x7e:
+            cout << pc << ": ROR " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",X" << endl;
             opbytes = 3; break;
         case 0x7f:
@@ -473,8 +518,14 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
         case 0xa0:
             cout << pc << ": LDY #" << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
+        case 0xa1:
+            cout << pc << ": LDA (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X)" << endl;
+            opbytes = 2; break;
         case 0xa2:
             cout << pc << ": LDX #" << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
+        case 0xa3:
+            cout << pc << ": LAX (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X)" << endl;
             opbytes = 2; break;
         case 0xa4:
             cout << pc << ": LDY " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
@@ -495,6 +546,9 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             opbytes = 2; break;
         case 0xaa:
             cout << pc << ": TAX" << endl; break;
+        case 0xab:
+            cout << pc << ": (highly unstable) LXA #" << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
         case 0xac:
             cout << pc << ": LDY " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << endl;
@@ -517,15 +571,35 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
         case 0xb1:
             cout << pc << ": LDA (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
             opbytes = 2; break;
+        case 0xb2:
+            cout << pc << ": JAM" << endl; break;
+        case 0xb3:
+            cout << pc << ": LAX (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
         case 0xb4:
             cout << pc << ": LDY " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
             opbytes = 2; break;
+        case 0xb5:
+            cout << pc << ": LDA " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
+            opbytes = 2; break;
+        case 0xb6:
+            cout << pc << ": LDX " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",Y" << endl;
+            opbytes = 2; break;
+        case 0xb7:
+            cout << pc << ": LAX " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",Y" << endl;
+            opbytes = 2; break;
+        case 0xb8:
+            cout << pc << ": CLV" << endl; break;
         case 0xb9:
             cout << pc << ": LDA " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
             opbytes = 3; break;
         case 0xba:
             cout << pc << ": TSX" << endl; break;
+        case 0xbb:
+            cout << pc << ": LAS " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
+            opbytes = 3; break;
         case 0xbc:
             cout << pc << ": LDY " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",X" << endl;
@@ -538,14 +612,24 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             cout << pc << ": LDX " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
             opbytes = 3; break;
+        case 0xbf:
+            cout << pc << ": LAX " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
+            opbytes = 3; break;
         case 0xc0:
             cout << pc << ": CPY #" << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
         case 0xc1:
             cout << pc << ": CMP (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X)" << endl;
             opbytes = 2; break;
+        case 0xc2:
+            cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
         case 0xc3:
             cout << pc << ": DCP (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X)" << endl;
+            opbytes = 2; break;
+        case 0xc4:
+            cout << pc << ": CPY " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
         case 0xc5:
             cout << pc << ": CMP " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
@@ -585,13 +669,38 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
         case 0xd0:
             cout << pc << ": BNE " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
+        case 0xd1:
+            cout << pc << ": CMP (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
         case 0xd2:
             cout << pc << ": JAM" << endl; break;
+        case 0xd3:
+            cout << pc << ": DCP (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
+        case 0xd4:
+            cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
         case 0xd5:
             cout << pc << ": CMP " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
             opbytes = 2; break;
+        case 0xd6:
+            cout << pc << ": DEC " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
+            opbytes = 2; break;
+        case 0xd7:
+            cout << pc << ": DCP " << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X" << endl;
+            opbytes = 2; break;
         case 0xd8:
             cout << pc << ": CLD" << endl; break;
+        case 0xd9:
+            cout << pc << ": CMP " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
+            opbytes = 3; break;
+        case 0xda:
+            cout << pc << ": NOP (undocumented)" << endl; break;
+        case 0xdb:
+            cout << pc << ": DCP " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
+            opbytes = 3; break;
         case 0xdc:
             cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << endl;
@@ -604,14 +713,33 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             cout << pc << ": DEC " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",X" << endl;
             opbytes = 3; break;
+        case 0xdf:
+            cout << pc << ": DCP " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",X" << endl;
+            opbytes = 3; break;
         case 0xe0:
             cout << pc << ": CPX #" << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
+        case 0xe1:
+            cout << pc << ": SBC (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X)" << endl;
             opbytes = 2; break;
         case 0xe2:
             cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
+        case 0xe3:
+            cout << pc << ": ISC (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << ",X)" << endl;
+            opbytes = 2; break;
+        case 0xe4:
+            cout << pc << ": CPX " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
+        case 0xe5:
+            cout << pc << ": SBC " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
         case 0xe6:
             cout << pc << ": INC " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
+        case 0xe7:
+            cout << pc << ": ISC " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
         case 0xe8:
             cout << pc << ": INX" << endl; break;
@@ -620,6 +748,9 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             opbytes = 2; break;
         case 0xea:
             cout << pc << ": NOP (undocumented)" << endl; break;
+        case 0xeb:
+            cout << pc << ": USBC #" << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
+            opbytes = 2; break;
         case 0xec:
             cout << pc << ": CPX " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << endl;
@@ -639,8 +770,14 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
         case 0xf0:
             cout << pc << ": BEQ " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
+        case 0xf1:
+            cout << pc << ": SBC (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
         case 0xf2:
             cout << pc << ": JAM" << endl; break;
+        case 0xf3:
+            cout << pc << ": ISC (" << setw(2) << setfill('0') << static_cast<int>(code[1]) << "),Y" << endl;
+            opbytes = 2; break;
         case 0xf4:
             cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1]) << endl;
             opbytes = 2; break;
@@ -659,9 +796,19 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
             cout << pc << ": SBC " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                    << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
             opbytes = 3; break;
+        case 0xfa:
+            cout << pc << ": NOP (undocumented)" << endl; break;
+        case 0xfb:
+            cout << pc << ": ISC " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",Y" << endl;
+            opbytes = 3; break;
         case 0xfc:
             cout << pc << ": NOP (undocumented) " << setw(2) << setfill('0') << static_cast<int>(code[1])
                                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << endl;
+            opbytes = 3; break;
+        case 0xfd:
+            cout << pc << ": SBC " << setw(2) << setfill('0') << static_cast<int>(code[1])
+                                   << setw(2) << setfill('0') << static_cast<int>(code[2]) << ",X" << endl;
             opbytes = 3; break;
         case 0xfe:
             cout << pc << ": INC " << setw(2) << setfill('0') << static_cast<int>(code[1])
@@ -727,8 +874,7 @@ int main (int argc, char **argv) {
     // switch to decimals for all the following outputs
     cout << dec;
 
-    /*
-    for (const auto &elem : buffer) {
+    /*for (const auto &elem : buffer) {
         cout << elem << " ";
     }
     cout << endl;*/
