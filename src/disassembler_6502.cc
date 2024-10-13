@@ -827,13 +827,19 @@ int disassemble6502op(const unsigned char *buffer, const unsigned int pc) {
 
 int main (int argc, char **argv) {
     
-    if (argc != 2) {
-        cerr << "Usage: " << argv[0] << " input.txt\n";
+    if (argc != 4) {
+        cerr << "\nUsage: " << argv[0] << " file start end\n\n";
+        cerr << "\tfile  : input file to be disassembled\n";
+        cerr << "\tstart : set program counter to start reading from this position\n";
+        cerr << "\tend   : disassemble until this position in the file, set to -1 to read the entire file\n\n";
         return 1;
     }
 
+    // read arguments
     ifstream file(argv[1], ios::binary);
-
+    unsigned int start_pos = stoi(argv[2]);
+    int end_pos = stoi(argv[3]);
+    
     if (!file.is_open()) {
         cerr << "Error opening the file.\n";
         return 1;
@@ -858,8 +864,10 @@ int main (int argc, char **argv) {
     }
     file.close();
     
+    // set buffer and start/ending
     unsigned char *this_buffer = buffer.data();
-    unsigned int pc = 0;
+    unsigned int pc = start_pos;
+    fsize = (end_pos == -1 ? fsize : static_cast<streampos>(end_pos));
 
     // switch to hexadecimals for all the following outputs
     cout << hex;
