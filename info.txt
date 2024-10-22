@@ -24,3 +24,8 @@ The Program Counter is a 16-bit register, need to understand if it has to be the
 Instructions are 151, and are either 1, 2, or 3 bytes long, depending on the addressing mode. The first byte is the opcode and the remaining bytes are the operands.
 There are also unofficial opcodes, sometimes called "illegal opcodes" or "undocumented opcodes", and are CPU instructions that were officially left unused in the original design.
 Some games may use illegal opcodes, so you better implement them.
+
+gdb: http://www.emulator101.com/developing-on-the-command-line.html
+
+Additional possible technologies:
+Make, CMake, debuggers, Standard Template Library
