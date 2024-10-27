@@ -1,5 +1,12 @@
 # Executables
 a.out
+run_*
+
+# Object files
+*.o
 
 # Data
 data
+
+# Stuff
+.vscode

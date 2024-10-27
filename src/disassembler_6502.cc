@@ -1,5 +1,5 @@
 #include <fstream>
-#include <iomanip> // for std::setw
+#include <iomanip> // for setw
 #include <iostream>
 #include <vector>
 

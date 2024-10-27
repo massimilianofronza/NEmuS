@@ -29,3 +29,10 @@ gdb: http://www.emulator101.com/developing-on-the-command-line.html
 
 Additional possible technologies:
 Make, CMake, debuggers, Standard Template Library
+
+Technical details:
+	the stack is at memory locations $0100-$01FF, with 255 values -> 1 byte -> offset given by the Stack Pointer from $0100 on
+	the stack works top-down, when a byte is pushed you decrease your SP
+	no detection of stack overflow, the SP just wraps around from $00 to $FF
+	
+
